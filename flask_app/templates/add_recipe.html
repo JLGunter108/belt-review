@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Recipe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <header class="col-6 d-flex justify-content-between my-2 mx-auto ">
+        <h1>Add New Recipe</h1>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </header>
+    {% with messages = get_flashed_messages(category_filter=["recipe-error"]) %}
+        {% if messages %}
+            {% for message in messages %}
+                <p class="text-center">{{message}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="/recipes/add" class="col-6 mx-auto" method="POST">
+        <input type="hidden" name="users_id" value="{{session['user_id']}}">
+        <section class="d-flex flex-column">
+            <label for="name">Name:</label>
+            <input type="text" name="name">
+            <label for="description">Description:</label>
+            <input type="text" name="description">
+            <label for="instructions">Instructions:</label>
+            <textarea name="instructions" cols="24" rows="5"></textarea>
+        </section>
+        <section class="d-flex flex-column">
+            <label for="date_made">Date Made:</label>
+            <input type="date" name="date_made" value="{{curr_date}}">
+            <p>Under 30 Minutes:</p>
+            <input type="radio" name="under_thirty" value="yes">
+            <label for="under_thirty">Yes</label>
+            <input type="radio" name="under_thirty" value="no">
+            <label for="under_thirty">No</label>
+        </section>
+        <button class="btn-primary my-2">Add New Recipe</button>
+    </form>
+</body>
+</html>
